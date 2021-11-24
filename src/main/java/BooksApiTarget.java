@@ -1,13 +1,15 @@
 public class BooksApiTarget {
 
-    private final String title;
+    private String title = "";
     private String author = "";
     private String ISBN = "";
 
-    public BooksApiTarget(String title) {
-        this.title = title;
+    public BooksApiTarget() {
     }
 
+    public void setTitle(String title){
+        this.title = title;
+    }
     public void setAuthor(String author) {
         this.author = author;
     }
@@ -17,7 +19,10 @@ public class BooksApiTarget {
     }
 
     public String getQuery() {
-        StringBuilder stringBuilder = new StringBuilder("q=intitle:" + title);
+        StringBuilder stringBuilder = new StringBuilder("q=");
+        if (!title.equals("")){
+            stringBuilder.append("intitle:").append(title);
+        }
         if (!author.equals(""))
             stringBuilder.append("+inauthor:").append(author);
         if (!ISBN.equals(""))

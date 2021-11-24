@@ -12,7 +12,8 @@ public class BooksApiMain {
         System.out.print("Author : ");
         String author = scanner.nextLine();
         BooksApiController controller = new BooksApiController();
-        BooksApiTarget target = new BooksApiTarget(title);
+        BooksApiTarget target = new BooksApiTarget();
+        target.setTitle(title);
         target.setAuthor(author);
         controller.sendQuery(target);
         HashMap<String, BooksApiResult> result = controller.getResult();

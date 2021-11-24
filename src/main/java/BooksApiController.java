@@ -17,10 +17,14 @@ public class BooksApiController {
 
     public void sendQuery(BooksApiTarget target) throws IOException {
         //TODO Get new key from Google api. (Read books api documentation)
-        URL url = new URL("https://www.googleapis.com/books/v1/volumes?" + urlFormatter(target.getQuery()) + "&key=AIzaSyBjAkyaxbpSI114orqjMmXo5BFJKCwZ1LA");
+        URL url = new URL("https://www.googleapis.com/books/v1/volumes?" + urlFormatter(target.getQuery()) + "&key=");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
 
+        if (con.getResponseCode() >= 400){
+            System.out.println("Couldn't be found!");
+            return;
+        }
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
         String inputLine;
@@ -38,9 +42,20 @@ public class BooksApiController {
     }
 
     private String urlFormatter(String rawUrl){
+        rawUrl = trToIng(rawUrl);
         return rawUrl.replaceAll("/s|[^a-zA-Z0-9-._~:+=]", "+");
     }
 
+    public static String trToIng(String rawUrl)
+    {
+        char[] tr = new char[] { 'İ', 'ı','ü', 'Ü', 'ç', 'Ç','Ğ', 'ğ','Ş', 'ş','ö','Ö' };
+        char[] eng = new char[] { 'I', 'i', 'u','U','c','C','G','g','S', 's','o','O', };
+        for (int i = 0; i < tr.length; i++)
+        {
+            rawUrl = rawUrl.replace(tr[i], eng[i]);
+        }
+        return rawUrl;
+    }
     private void parseItems(String json){
         int counter = 0;
         int start = 0;
@@ -74,4 +89,5 @@ public class BooksApiController {
     public HashMap<String, BooksApiResult> getResult() {
         return result;
     }
+
 }
