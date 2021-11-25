@@ -20,12 +20,11 @@ public class BooksApiTarget {
 
     public String getQuery() {
         StringBuilder stringBuilder = new StringBuilder("q=");
-        if (!title.equals("")){
+        if (!title.replaceAll("\\s+","").equals(""))
             stringBuilder.append("intitle:").append(title);
-        }
-        if (!author.equals(""))
+        if (!author.replaceAll("\\s+","").equals(""))
             stringBuilder.append("+inauthor:").append(author);
-        if (!ISBN.equals(""))
+        if (!ISBN.replaceAll("\\s+","").equals(""))
             stringBuilder.append("+isbn:").append(ISBN);
         return stringBuilder.toString();
     }

@@ -11,10 +11,13 @@ public class BooksApiMain {
         String title = scanner.nextLine();
         System.out.print("Author : ");
         String author = scanner.nextLine();
+        System.out.print("ISBN : ");
+        String ISBN = scanner.nextLine();
         BooksApiController controller = new BooksApiController();
         BooksApiTarget target = new BooksApiTarget();
         target.setTitle(title);
         target.setAuthor(author);
+        target.setISBN(ISBN);
         controller.sendQuery(target);
         HashMap<String, BooksApiResult> result = controller.getResult();
         Gson gson = new Gson();

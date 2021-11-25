@@ -25,6 +25,7 @@ public class BooksApiController {
             System.out.println("Couldn't be found!");
             return;
         }
+
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
         String inputLine;
@@ -32,6 +33,7 @@ public class BooksApiController {
         while ((inputLine = in.readLine()) != null) {
             content.append(inputLine);
         }
+
         in.close();
         parseItems(content.substring(content.indexOf("["), content.lastIndexOf("]")));
         appendListGson();
@@ -42,11 +44,11 @@ public class BooksApiController {
     }
 
     private String urlFormatter(String rawUrl){
-        rawUrl = trToIng(rawUrl);
+        rawUrl = trToEng(rawUrl);
         return rawUrl.replaceAll("/s|[^a-zA-Z0-9-._~:+=]", "+");
     }
 
-    public static String trToIng(String rawUrl)
+    public static String trToEng(String rawUrl)
     {
         char[] tr = new char[] { 'İ', 'ı','ü', 'Ü', 'ç', 'Ç','Ğ', 'ğ','Ş', 'ş','ö','Ö' };
         char[] eng = new char[] { 'I', 'i', 'u','U','c','C','G','g','S', 's','o','O', };
